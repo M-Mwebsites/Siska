@@ -1,3 +1,9 @@
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        document.getElementById('transitionDiv').style.width = '0';
+    }, 100);
+});
+
 //fullpage scroll
 document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('section');

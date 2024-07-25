@@ -19,6 +19,16 @@ body, html {
     overflow: hidden;
 }
 
+#transitionDiv {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    transition: 10s;
+}
+
 #birds {
     position: fixed;
     width: 100vw;
@@ -68,7 +78,6 @@ section div {
 
 section a {
     position: relative;
-    margin-top: 20px;
     color: white;
 }
 
@@ -77,9 +86,13 @@ section img {
     width: 300px;
     height: 500px;
     border-radius: 50vw;
+    object-fit: cover;
 }
 
-section span {
-    position: relative;
+section p {
+    position: absolute;
     z-index: 2;
+    font-size: 36px;
+    color: white;
+    top: 22.5em;
 }
