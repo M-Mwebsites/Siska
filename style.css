@@ -1,0 +1,37 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-image: url('tree-final.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: 100vh;
+    background-position: center top;
+    background-attachment: fixed;
+    font-family: "Montserrat", sans-serif;
+}
+
+.siska {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+    margin-top: 40vh;
+    margin-bottom: 40vh;
+}
+
+p {
+    margin: 0 auto;
+    padding-top: 300px;
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
+    max-width: 500px;
+}
+
+#birds {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+}

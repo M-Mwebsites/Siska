@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treehouse</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link href="SmoothScroll.css" rel="stylesheet">
+    <script src="SmoothScroll.min.js"></script>
+
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="birds"></div>
+    <div class="viewport">
+        <div class="container" >
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lorem dolor, mattis et auctor quis, iaculis lacinia massa. Mauris suscipit, elit non posuere rutrum, libero ante pretium augue, eget commodo enim nunc eget orci. Proin vitae tortor scelerisque, convallis magna et, aliquam arcu. Nam pretium purus a quam fringilla volutpat. Mauris tempus semper rhoncus. In auctor dictum cursus. Ut id pharetra lorem, vel interdum risus. Maecenas turpis nisl, luctus in semper ut, feugiat et justo. Nullam maximus erat vel erat interdum suscipit. Phasellus congue congue augue non rhoncus.            </p>
+            <img class="siska" src="pine-final.png">
+            <img class="siska" src="pine-final.png">
+            <img class="siska" src="pine-final.png">
+            <img class="siska" src="pine-final.png">
+            <img class="siska" src="pine-final.png">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="three.r134.min.js"></script>
+    <script src="vanta.birds.min.js"></script>
+    <script>
+    VANTA.BIRDS({
+    el: "#birds",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200.00,
+    minWidth: 200.00,
+    scale: 1.00,
+    scaleMobile: 1.00,
+    backgroundColor: 0xffffff,
+    backgroundAlpha: 0,
+    color1: 0x436a2b,
+    color2: 0x9f7f53,
+    colorMode: "lerp",
+    birdSize: 1.00,
+    wingSpan: 18.00,
+    speedLimit: 3.00,
+    separation: 80.00,
+    alignment: 55.00,
+    cohesion: 35.00,
+    quantity: 3.00
+    })
+    </script>
+</body>
+</html>
