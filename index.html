@@ -3,44 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Treehouse</title>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-    <link href="SmoothScroll.css" rel="stylesheet">
-    <script src="SmoothScroll.min.js"></script>
-
-    <script src="three.r134.min.js"></script>
-    <script src="vanta.birds.min.js"></script>
-
-    <link href="style.css" rel="stylesheet">
+    <title>Mouse and Touch Controlled Carousel</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .carousel {
+            padding: 0 20vw;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+        .carousel-inner div {
+            min-width: 50%;
+            box-sizing: border-box;
+            height: 100px;
+        }
+        .carousel-inner div:nth-child(1) { background-color: red; }
+        .carousel-inner div:nth-child(2) { background-color: orange; }
+        .carousel-inner div:nth-child(3) { background-color: yellow; }
+        .carousel-inner div:nth-child(4) { background-color: green; }
+        .carousel-inner div:nth-child(5) { background-color: blue; }
+        .carousel-inner div:nth-child(6) { background-color: indigo; }
+        .carousel-inner div:nth-child(7) { background-color: violet; }
+        .carousel-inner div:nth-child(8) { background-color: pink; }
+        .carousel-inner div:nth-child(9) { background-color: cyan; }
+        .carousel-inner div:nth-child(10) { background-color: magenta; }
+    </style>
 </head>
 <body>
-    <div id="transitionDiv"></div>
-    <div id="birds"></div>
-    <div class="intro">
-        <h1>PAVOL ŠIŠKA</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lorem dolor, mattis et auctor quis, iaculis lacinia massa. Mauris suscipit, elit non posuere rutrum, libero ante pretium augue, eget commodo enim nunc eget orci. Proin vitae tortor scelerisque, convallis magna et, aliquam arcu. Nam pretium purus a quam fringilla volutpat. Mauris tempus semper rhoncus. In auctor dictum cursus. Ut id pharetra lorem, vel interdum risus. Maecenas turpis nisl, luctus in semper ut, feugiat et justo. Nullam maximus erat vel erat interdum suscipit. Phasellus congue congue augue non rhoncus.</p>
+    <div class="carousel">
+        <div class="carousel-inner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
-    <section>
-        <div>
-            <a href="scroll.html"><img src="d.jpg"><p>DUBODOM</p></a>
-        </div>
-    </section>
-    <section>
-        <div>
-            <a href="scroll.html"><img src="d.jpg"><p>DUBODOM</p></a>
-        </div>
-    </section>
-    <section>
-        <div>
-            <a href="scroll.html"><img src="d.jpg"><p>DUBODOM</p></a>
-        </div>
-    </section>
+    <script>
+        const carouselInner = document.querySelector('.carousel-inner');
+        let isTouching = false;
+        let startX = 0;
+        let scrollX = 0;
 
-    <script src="script.js"></script>
+        const divWidth = carouselInner.querySelector('div').offsetWidth;
+        const carouselWidth = carouselInner.scrollWidth - carouselInner.clientWidth;
+
+        // Mouse movement handler
+        document.addEventListener('mousemove', (e) => {
+            if (!isTouching) {
+                const mouseX = e.clientX;
+                scrollX = (mouseX / window.innerWidth) * carouselWidth;
+                carouselInner.style.transform = `translateX(${-scrollX}px)`;
+            }
+        });
+
+        // Touch start handler
+        document.addEventListener('touchstart', (e) => {
+            isTouching = true;
+            startX = e.touches[0].clientX;
+        });
+
+        // Touch move handler
+        document.addEventListener('touchmove', (e) => {
+            if (isTouching) {
+                const touchX = e.touches[0].clientX;
+                const deltaX = startX - touchX;
+                startX = touchX;
+                scrollX += deltaX;
+                if (scrollX < 0) scrollX = 0;
+                if (scrollX > carouselWidth) scrollX = carouselWidth;
+                carouselInner.style.transform = `translateX(${-scrollX}px)`;
+            }
+        });
+
+        // Touch end handler
+        document.addEventListener('touchend', () => {
+            isTouching = false;
+            const nearestDivIndex = Math.round(scrollX / divWidth);
+            scrollX = nearestDivIndex * divWidth;
+            if (scrollX > carouselWidth) scrollX = carouselWidth;
+            carouselInner.style.transform = `translateX(${-scrollX}px)`;
+        });
+    </script>
 </body>
 </html>
