@@ -295,6 +295,7 @@
      z-index: 9999999;
      position: absolute;
      bottom: 0;
+     visibility: hidden;
  }
  .fp-warning,
  .fp-watermark a{
@@ -308,6 +309,7 @@
      display: inline-block;
      border-radius: 3px;
      margin: 12px;
+     visibility: hidden;
  }
  .fp-noscroll .fp-overflow{
      overflow: hidden;
