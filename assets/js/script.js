@@ -25,7 +25,7 @@ VANTA.BIRDS({
 
 
 
-// fullpage scroll
+//fullpage scroll
 new fullpage('#fullpage', {
 	//options here
 	autoScrolling:true,
@@ -44,7 +44,7 @@ let scrollX = 0;
 const divWidth = carouselInner.querySelector('div').offsetWidth;
 const carouselWidth = carouselInner.scrollWidth - carouselInner.clientWidth;
 
-// Mouse movement handler
+//mouse movement handler
 document.addEventListener('mousemove', (e) => {
     if (!isTouching) {
         const mouseX = e.clientX;
@@ -53,13 +53,13 @@ document.addEventListener('mousemove', (e) => {
     }
 });
 
-// Touch start handler
+//touch start handler
 document.addEventListener('touchstart', (e) => {
     isTouching = true;
     startX = e.touches[0].clientX;
 });
 
-// Touch move handler
+//touch move handler
 document.addEventListener('touchmove', (e) => {
     if (isTouching) {
         const touchX = e.touches[0].clientX;
@@ -72,7 +72,7 @@ document.addEventListener('touchmove', (e) => {
     }
 });
 
-// Touch end handler
+//touch end handler
 document.addEventListener('touchend', () => {
     isTouching = false;
     const nearestDivIndex = Math.round(scrollX / divWidth);
@@ -82,21 +82,51 @@ document.addEventListener('touchend', () => {
 });
 
 
-// scroll to menu
+
+//scroll to menu
 function scrollToSection(section) {
     var elmntToView = document.getElementById(section);
     elmntToView.scrollIntoView();
 }
 
 
+
+//tree animation
 document.addEventListener("DOMContentLoaded", function() {
     const imgElement = document.querySelector("#about img");
+    let currentImageIndex = 1;
+    let interval;
+    let isCountingDown = false;
 
     imgElement.addEventListener("mouseenter", function() {
-        imgElement.src = "assets/images/name.gif";
+        clearInterval(interval); // Clear any existing intervals to avoid conflicts
+        isCountingDown = false; // Reset the countdown flag
+        currentImageIndex = Math.max(currentImageIndex, 1); // Ensure starting from the correct index
+        
+        interval = setInterval(function() {
+            if (currentImageIndex < 17) {
+                currentImageIndex++;
+                imgElement.src = `assets/images/tree/${String(currentImageIndex).padStart(2, '0')}.svg`;
+            } else {
+                clearInterval(interval); // Stop the interval when it reaches 17
+            }
+        }, 50);
     });
 
     imgElement.addEventListener("mouseleave", function() {
-        imgElement.src = "assets/images/name.svg";
+        clearInterval(interval); // Clear any existing intervals to avoid conflicts
+        isCountingDown = true; // Set the countdown flag
+
+        interval = setInterval(function() {
+            if (currentImageIndex > 1) {
+                currentImageIndex--;
+                imgElement.src = `assets/images/tree/${String(currentImageIndex).padStart(2, '0')}.svg`;
+            } else {
+                clearInterval(interval); // Stop the interval when it reaches 1
+                imgElement.src = "assets/images/name.svg"; // Set to name.svg
+                isCountingDown = false; // Reset the countdown flag
+            }
+        }, 30);
     });
 });
+
