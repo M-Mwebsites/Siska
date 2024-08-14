@@ -87,3 +87,16 @@ function scrollToSection(section) {
     var elmntToView = document.getElementById(section);
     elmntToView.scrollIntoView();
 }
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const imgElement = document.querySelector("#about img");
+
+    imgElement.addEventListener("mouseenter", function() {
+        imgElement.src = "assets/images/name.gif";
+    });
+
+    imgElement.addEventListener("mouseleave", function() {
+        imgElement.src = "assets/images/name.svg";
+    });
+});
