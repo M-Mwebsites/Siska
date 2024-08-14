@@ -29,7 +29,10 @@ VANTA.BIRDS({
 new fullpage('#fullpage', {
 	//options here
 	autoScrolling:true,
-	scrollHorizontally: true
+	scrollHorizontally: true,
+    afterLoad: function(origin, destination, direction){
+        updateMenuColor(destination);
+    },
 });
 
 
@@ -85,8 +88,48 @@ document.addEventListener('touchend', () => {
 
 //scroll to menu
 function scrollToSection(section) {
-    var elmntToView = document.getElementById(section);
-    elmntToView.scrollIntoView();
+    const active = fullpage_api.getActiveSection();
+    const current = active.item.id;
+    if (current == 'about' && section == 'portfolio') {
+        fullpage_api.moveSectionDown();
+    } else if (current == 'about' && section == 'contact') {
+        fullpage_api.moveSectionDown();
+        fullpage_api.moveSectionDown();
+    } else if (current == 'portfolio' && section == 'about') {
+        fullpage_api.moveSectionUp();
+    } else if (current == 'portfolio' && section == 'contact') {
+        fullpage_api.moveSectionDown();
+    } else if (current == 'contact' && section == 'about') {
+        fullpage_api.moveSectionUp();
+        fullpage_api.moveSectionUp();
+    } else if (current == 'contact' && section == 'portfolio') {
+        fullpage_api.moveSectionUp();
+    }
+    setTimeout(() => {
+        updateMenuColor(section);
+    }, 1400);
+}
+
+//menu colors
+function updateMenuColor(destination) {
+    const div = destination.item?.id || destination;
+    const aboutLink = document.getElementById('aboutLink');
+    const portfolioLink = document.getElementById('portfolioLink');
+    const contactLink = document.getElementById('contactLink');
+
+    if(div == "about") {
+        aboutLink.style.color = '#8a4536';
+        portfolioLink.style.color = 'white';
+        contactLink.style.color = 'white';
+    } else if (div == "portfolio") {
+        aboutLink.style.color = 'black';
+        portfolioLink.style.color = '#8a4536';
+        contactLink.style.color = 'black';
+    } else if (div == "contact") {
+        aboutLink.style.color = 'white';
+        portfolioLink.style.color = 'white';
+        contactLink.style.color = '#8a4536';
+    }
 }
 
 
@@ -94,39 +137,63 @@ function scrollToSection(section) {
 //tree animation
 document.addEventListener("DOMContentLoaded", function() {
     const imgElement = document.querySelector("#about img");
+    const txtElement = document.querySelector("#about p");
     let currentImageIndex = 1;
     let interval;
     let isCountingDown = false;
 
-    imgElement.addEventListener("mouseenter", function() {
-        clearInterval(interval); // Clear any existing intervals to avoid conflicts
-        isCountingDown = false; // Reset the countdown flag
-        currentImageIndex = Math.max(currentImageIndex, 1); // Ensure starting from the correct index
+    txtElement.addEventListener("mouseenter", function() {
+        clearInterval(interval);
+        isCountingDown = false;
+        currentImageIndex = Math.max(currentImageIndex, 1);
         
         interval = setInterval(function() {
             if (currentImageIndex < 17) {
                 currentImageIndex++;
                 imgElement.src = `assets/images/tree/${String(currentImageIndex).padStart(2, '0')}.svg`;
             } else {
-                clearInterval(interval); // Stop the interval when it reaches 17
+                clearInterval(interval);
+            }
+        }, 50);
+    });
+
+    imgElement.addEventListener("mouseenter", function() {
+        clearInterval(interval);
+        isCountingDown = false;
+        currentImageIndex = Math.max(currentImageIndex, 1);
+        
+        interval = setInterval(function() {
+            if (currentImageIndex < 17) {
+                currentImageIndex++;
+                imgElement.src = `assets/images/tree/${String(currentImageIndex).padStart(2, '0')}.svg`;
+            } else {
+                clearInterval(interval);
             }
         }, 50);
     });
 
     imgElement.addEventListener("mouseleave", function() {
-        clearInterval(interval); // Clear any existing intervals to avoid conflicts
-        isCountingDown = true; // Set the countdown flag
+        clearInterval(interval);
+        isCountingDown = true;
 
         interval = setInterval(function() {
             if (currentImageIndex > 1) {
                 currentImageIndex--;
                 imgElement.src = `assets/images/tree/${String(currentImageIndex).padStart(2, '0')}.svg`;
             } else {
-                clearInterval(interval); // Stop the interval when it reaches 1
-                imgElement.src = "assets/images/name.svg"; // Set to name.svg
-                isCountingDown = false; // Reset the countdown flag
+                clearInterval(interval);
+                imgElement.src = "assets/images/name.svg";
+                isCountingDown = false;
             }
         }, 30);
     });
 });
 
+
+
+setTimeout(() => {
+    const imgElement = document.querySelector("#about img");
+    imgElement.style.top = '20vh';
+    const txtElement = document.querySelector("#about p");
+    txtElement.style.top = '37vh';
+}, 300);

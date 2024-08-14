@@ -24,17 +24,19 @@ body {
     text-align: center;
     max-width: 35vw;
     z-index: 1;
-    position: fixed;
-    top: 37vh;
+    position: absolute;
+    top: 100vh;
     left: 50%;
     transform: translateX(-50%);
+    transition: 0.5s;
 }
 
 #about img {
-    position: fixed;
-    top: 20vh;
+    position: absolute;
+    top: 100vh;
     left: 50%;
     transform: translateX(-50%);
+    transition: 0.5s;
 }
 
 /** PORTFOLIO **/
@@ -46,6 +48,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: white;
 }
 
 #portfolio .fp-overflow {
@@ -67,16 +70,16 @@ body {
     height: 500px;
     margin-right: 10px;
 }
-.carousel-inner div:nth-child(1) { background-color: red; }
-.carousel-inner div:nth-child(2) { background-color: orange; }
-.carousel-inner div:nth-child(3) { background-color: yellow; }
-.carousel-inner div:nth-child(4) { background-color: green; }
-.carousel-inner div:nth-child(5) { background-color: blue; }
+.carousel-inner div:nth-child(1) { background-color: rgb(102, 9, 9); }
+.carousel-inner div:nth-child(2) { background-color: rgb(97, 66, 7); }
+.carousel-inner div:nth-child(3) { background-color: rgb(105, 105, 9); }
+.carousel-inner div:nth-child(4) { background-color: rgb(6, 70, 6); }
+.carousel-inner div:nth-child(5) { background-color: rgb(3, 3, 88); }
 .carousel-inner div:nth-child(6) { background-color: indigo; }
-.carousel-inner div:nth-child(7) { background-color: violet; }
-.carousel-inner div:nth-child(8) { background-color: pink; }
-.carousel-inner div:nth-child(9) { background-color: cyan; }
-.carousel-inner div:nth-child(10) { background-color: magenta; }
+.carousel-inner div:nth-child(7) { background-color: rgb(93, 2, 93); }
+.carousel-inner div:nth-child(8) { background-color: rgb(102, 2, 19); }
+.carousel-inner div:nth-child(9) { background-color: rgb(2, 95, 95); }
+.carousel-inner div:nth-child(10) { background-color: rgb(85, 2, 85); }
 
 /** CONTACT **/
 
@@ -92,6 +95,7 @@ body {
 }
 
 .menu p {
+    color: white;
     text-transform: uppercase;
     font-size: 20px;
     font-weight: 700;
