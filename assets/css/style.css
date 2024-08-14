@@ -100,4 +100,9 @@ body {
     font-size: 20px;
     font-weight: 700;
     line-height: 24.38px;
+    transition: 0.3s;
+}
+
+.menu p:hover {
+    letter-spacing: 5px;
 }
