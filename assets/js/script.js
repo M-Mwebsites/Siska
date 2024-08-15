@@ -39,7 +39,7 @@ new fullpage('#fullpage', {
 
 
 //carousel
-const carouselInner = document.querySelector('.carousel-inner');
+const carouselInner = document.querySelector('#carousel-inner');
 let isTouching = false;
 let startX = 0;
 let scrollX = 0;
@@ -193,7 +193,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
 setTimeout(() => {
     const imgElement = document.querySelector("#about img");
-    imgElement.style.top = '20vh';
+    imgElement.style.top = '24vh';
     const txtElement = document.querySelector("#about p");
     txtElement.style.top = '37vh';
 }, 300);
+
+
+
+document.querySelectorAll('#carousel-inner div').forEach(div => {
+    let interval;
+    let currentImageIndex = 0;
+
+    div.addEventListener('mouseenter', () => {
+        clearInterval(interval);
+        let imgElement = div.querySelector('img');
+        let imagePaths = div.getAttribute('data-images').split(',');
+
+        if (imagePaths.length > 1) {
+            interval = setInterval(() => {
+                currentImageIndex = (currentImageIndex + 1) % imagePaths.length;
+                imgElement.src = imagePaths[currentImageIndex];
+            }, 800);
+        }
+    });
+
+    div.addEventListener('mouseleave', () => {
+        clearInterval(interval);
+        currentImageIndex = 0;
+        let imgElement = div.querySelector('img');
+        let imagePaths = div.getAttribute('data-images').split(',');
+        imgElement.src = imagePaths[0];
+    });
+});
