@@ -4,40 +4,64 @@ html, * {
 }
 
 body {
-    background-color: #5f1c00;
+    background-color: #FFAFAF;
     font-family: "Montserrat", sans-serif;
-}
-
-#birds {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
 }
 
 
 /** ABOUT **/
 #about .text {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
     line-height: 19.5px;
     color: white;
     text-align: center;
-    width: 520px;
     max-width: 90vw;
     z-index: 1;
     position: absolute;
-    top: 100vh;
+    top: 150%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     transition: 0.5s;
+    text-transform: uppercase;
+    margin: 0;
 }
 
-#about img {
+#about .name {
     position: absolute;
-    top: 100vh;
+    top: 150%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     transition: 0.5s;
+    color: #8A4536;
+    font-size: 170px;
+    margin: 0;
+    font-weight: bold;
+}
+
+#about .text:hover ~ .name  {
+    filter: blur(4px);
+}
+
+@media only screen and (max-width: 800px) {
+    #about .name {
+        font-size: 140px;
+    }
+    #about .text {
+        font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #about .name {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        font-size: 90px;
+    }
+    #about .text span {
+        padding-top: 10px;
+        display: block;
+    }
 }
 
 /** PORTFOLIO **/
@@ -55,14 +79,15 @@ body {
 #portfolio .fp-overflow {
     width: 100%;
     height: 100%;
+    display: flex;             /* Add flexbox */
+    justify-content: center;   /* Center horizontally */
+    align-items: center;       /* Center vertically */
     overflow: hidden;
 }
 
 .carousel {
-    padding: 0 20vw;
     position: relative;
-    max-width: 100vw;
-    margin-top: 12vw;
+    max-width: 80vw;
 }
 #carousel-inner {
     display: flex;
@@ -73,7 +98,7 @@ body {
     width: 350px;
     box-sizing: border-box;
     height: 500px;
-    margin-right: 10px;
+    margin-right: 20px;
     transition: 0.5s;
     position: relative;
 }
@@ -145,7 +170,104 @@ body {
     letter-spacing: 1px;
 }
 
+/* Gallery Icon */
+#carousel-inner div .gallery {
+    position: absolute;
+    display: block;
+    bottom: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    transition: width 0.3s ease, height 0.3s ease;
+    z-index: 2;
+    opacity: 0;
+}
+
+#carousel-inner div .gallery:hover {
+    width: 32px;
+    height: 32px;
+}
+
+#carousel-inner div:hover .gallery, #carousel-inner div .overlay:hover .gallery, #carousel-inner div .project-link:hover .gallery  {
+    opacity: 1;
+}
+
+/* @media only screen and (max-width: 600px) {
+    #portfolio .fp-overflow {
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+    }
+    #carousel-inner {
+        flex-direction: column;
+        gap: 20px;
+        transform: translateX(0) !important;
+    }
+    #carousel-inner div {
+        height: 100px;
+    }
+} */
+
 /** CONTACT **/
+
+#contact {
+    position: relative;
+}
+
+#contact #mailBlur {
+    position: absolute;
+    color: #8a4536;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%,-50%);
+    font-size: 100px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    width: 400px;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+#contact #mail {
+    position: absolute;
+    color: white;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%,-50%);
+    font-size: 32px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+#contact #mail:hover {
+    font-weight: bold;
+}
+
+.blur {
+    filter: blur(4px);
+}
+
+@media only screen and (max-width: 800px) {
+    #contact #mailBlur {
+        font-size: 80px;
+
+    }
+    #contact #mail {
+        font-size: 28px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #contact #mailBlur {
+        font-size: 70px;
+        max-width: 70vw;
+    }
+    #contact #mail {
+        font-size: 22px;
+    }
+}
 
 
 /** MENU **/
@@ -165,8 +287,219 @@ body {
     font-weight: 700;
     line-height: 24.38px;
     transition: 0.3s;
+    margin: 0;
+    bottom: 2vh;
+    position: relative;
 }
 
 .menu p:hover {
     letter-spacing: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+    .menu {
+        flex-direction: column;
+        gap: 5vh;
+        width: 7vw;
+        top: 0;
+    }
+    .menu p {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        bottom: 0;
+        font-size: 18px;
+    }
+    .menu p:hover {
+        letter-spacing: 0px;
+    }
+}
+
+
+
+
+/* Gallery Modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    overflow: hidden;
+    z-index: 1000;
+    transition: opacity 0.5s ease; /* Add a transition for opacity */
+    opacity: 0; /* Ensure it's hidden initially */
+}
+
+.gallery-container {
+    position: relative;
+    width: 90%;
+    height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    transition: transform 0.5s ease; /* Ensure smooth transform */
+}
+
+/* Gallery Images */
+.gallery-images {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+    width: 100%;
+}
+
+/* Individual Image */
+.gallery-images img {
+    flex-shrink: 0;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Arrows */
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 80px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    z-index: 1001;
+    transition: 0.3s;
+    line-height: 0.7;
+}
+
+.arrow:hover {
+    font-size: 100px;
+}
+
+.arrow.left {
+    left: 10px;
+}
+
+.arrow.right {
+    right: 10px;
+}
+
+/* Close Button */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 80px;
+    color: white;
+    transition: 0.3s;
+    line-height: 0.5;
+    margin-top: 10px;
+    z-index: 1000;
+}
+
+.close:hover {
+    top: 5px;
+    right: 15px;
+    font-size: 100px;
+}
+
+.gallery-indicator {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 1001;
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
+}
+
+#gallery-project-name {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40px;
+    color: white;
+    text-align: center;
+    z-index: 10;
+    text-transform: uppercase;
+    font-weight: bold;
+    width: 70vw;
+    margin-top: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    .arrow {
+        display: none !important;
+    }
+    #gallery-project-name {
+        font-size: 30px;
+        margin-top: 15px;
+    }
+}
+
+
+
+
+/** GAME **/
+.game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 120px;
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%,-50%);
+}
+
+.game a {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+    padding-bottom: 10px;
+    transition: 0.3s;
+}
+
+.game .hover-enabled:hover {
+    font-weight: bold;
+}
+
+.game a span {
+    color: #8a4536;
+}
+
+.game .pointer {
+    margin: 0;
+    width: 20px;
+}
+
+.game #knob {
+    width: 120px;
+    user-select: none;
+}
+
+.game #slowDown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    display: none;
+    rotate: 90deg;
+    margin: 17px -17px;
+}
+
+@media only screen and (max-width: 600px) {
+    .game a {
+        font-size: 20px;
+    }
+    .game #knob {
+        width: 160px;
+    }
 }
