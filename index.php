@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ŠIŠKA</title>
 
+    <meta name="description" content="Content goes here...">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta property="og:image" content="assets/images/favicon.png">
+    <meta property="og:url" content="https://pavolsiska.com">
+    <meta name="twitter:card" content="assets/images/favicon.png">
+
     <link rel="icon" type="image/png" href="assets/images/favicon.png" />
 
     <!-- Google Fonts -->
@@ -65,6 +71,7 @@
                 <a id="mobile">+421<span>_</span>________</a>
                 <img src="assets/images/pointer.svg" class="pointer">
                 <p id="slowDown">Slow down!</p>
+                <p id="smile">:)</p>
             </div>
         </div>
     </div>

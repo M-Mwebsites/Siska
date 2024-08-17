@@ -497,10 +497,8 @@ function rotateImage(event) {
         phoneElement.innerHTML = `+421${guessedDigits}`;
         phoneElement.href = "tel:+421902172705";
         phoneElement.classList.add('hover-enabled');
-        const slowDownMessage = document.getElementById("slowDown");
-        slowDownMessage.innerText = ":)";
-
-        slowDownMessage.style.display = "block";
+        const smile = document.getElementById("smile");
+        smile.style.display = "block";
     }
 }
 
