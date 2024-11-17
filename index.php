@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ŠIŠKA</title>
+    <title>PALO SISKA</title>
 
     <meta name="description" content="Content goes here...">
     <meta name="keywords" content="HTML, CSS, JavaScript">
@@ -17,6 +17,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=Unkempt:wght@400;700&display=swap" rel="stylesheet">
 
     <link href="assets/css/fullpage.css" rel="stylesheet">
     <script src="assets/js/fullpage.js"></script>
@@ -24,11 +28,24 @@
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
+    <img src="assets/images/loading.gif" style="display: none;">
+    <img src="assets/images/pointer.svg" style="display: none;">
+    <img src="assets/images/knob.svg" style="display: none;">
     
     <div id="fullpage">
+        <div class="section" id="hero">
+            <p class="text">I design. I build. I design & build</p>
+            <p class="name">SISKA</p>
+        </div>
+
         <div class="section" id="about">
-            <p class="text">I design, I build. <span>I design and build.</span></p>
-            <p class="name">ŠIŠKA</p>
+            <p class="text">
+                Hi, I am Palo,<br>
+                After graduation at TU in Vienna I am designing and of course sometimes also building my proposals for over 8 years for now.<br>
+                With various domestic and international experiences I have already achieved skills in architecture, design, craftsmanship and building management as well.<br>
+                My design philosophy is to achieve, through my designs, strong bonding and sensible adhesive between humans and their surroundings.<br>
+                Let me help you as well.
+            </p>
         </div>
 
         <div class="section" id="portfolio">
@@ -73,6 +90,8 @@
                 <p id="slowDown">Slow down!</p>
                 <p id="smile">:)</p>
             </div>
+            <img src="assets/images/map.gif" class="giif">
+            <!-- <p class="place">Marianka, Slovakia</p> -->
         </div>
     </div>
 

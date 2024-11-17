@@ -1,3 +1,86 @@
+async function checkInternetSpeed() {
+    return new Promise((resolve, reject) => {
+        const image = new Image();
+        const startTime = Date.now();
+        const imageUrl = 'https://images3.alphacoders.com/115/1151867.png'; // Use a small image to test
+
+        image.onload = function() {
+            const endTime = Date.now();
+            const duration = (endTime - startTime) / 1000; // Time in seconds
+            const fileSize = 1024 * 50; // File size in bytes (50KB example)
+            const speedBps = (fileSize * 8) / duration; // Speed in bits per second
+            const speedKbps = speedBps / 1024; // Speed in kilobits per second
+
+            resolve(speedKbps);
+        };
+
+        image.onerror = function() {
+            console.error('Error loading test image for speed check.');
+            reject('Failed to load image');
+        };
+
+        image.src = imageUrl;
+    });
+}
+
+let speed = 0;
+// Using async/await to handle the result
+(async () => {
+    try {
+        speed = await checkInternetSpeed();
+        console.log(`Internet speed: ${speed} Kbps`);
+// carousel images change
+function updateCarouselImages() {
+    document.querySelectorAll('#carousel-inner div').forEach(div => {
+        let interval;
+        let currentImageIndex = 0;
+
+        const changeImage = () => {
+            let imgElement = div.querySelector('img');
+            if (imgElement != null) {
+                let imagePaths = div.getAttribute('data-images').split(',');
+
+                if (imagePaths.length > 1) {
+                    currentImageIndex = (currentImageIndex + 1) % imagePaths.length;
+                    imgElement.src = imagePaths[currentImageIndex];
+                }
+            }
+        };
+
+        if (window.innerWidth > 600 && speed > 1000) {
+            div.addEventListener('mouseenter', () => {
+                clearInterval(interval);
+                changeImage();
+                interval = setInterval(changeImage, 800);
+            });
+            div.addEventListener('mouseleave', () => {
+                clearInterval(interval);
+                currentImageIndex = 0;
+                let imgElement = div.querySelector('img');
+                if (imgElement != null) {
+                    let imagePaths = div.getAttribute('data-images').split(',');
+                    imgElement.src = imagePaths[0];
+                }
+            });
+        }
+
+        // Additional functionality for smaller screens
+        if (window.innerWidth <= 600 && speed > 1000) {
+            clearInterval(interval);
+            interval = setInterval(changeImage, 1500); // Change images every 1.5 seconds
+        }
+    });
+}
+
+// Run the function on load and on resize
+updateCarouselImages();
+window.addEventListener('resize', updateCarouselImages);
+    } catch (error) {
+        console.error(error);
+    }
+})();
+
+
 // fullpage scroll
 new fullpage('#fullpage', {
     // options here
@@ -9,31 +92,47 @@ new fullpage('#fullpage', {
     },
 });
 
-// Mouse movement for color and letter spacing
-document.addEventListener('mousemove', (e) => {
+
+const colors = [
+    {r:255, g:175, b:175},
+    {r:255, g:215, b:175},
+    {r:206, g:255, b:175},
+    {r:175, g:236, b:255},
+    {r:192, g:175, b:255},
+]
+const random = Math.floor(Math.random() * 4);
+document.body.style.backgroundColor = `rgb(${colors[random].r}, ${colors[random].g}, ${colors[random].b})`;
+function updateStyles(clientX, clientY) {
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
-    
+
     // Horizontal color change
-    const mouseY = e.clientY;
-    const colorRatio = mouseY / screenHeight;
-    const r = Math.round(255 - (colorRatio * (255 - 95)));
-    const g = Math.round(175 - (colorRatio * 175));
-    const b = Math.round(175 - (colorRatio * 175));
+    const colorRatio = clientY / screenHeight;
+    const r = Math.round(colors[random].r - (colorRatio * (255 - 95)));
+    const g = Math.round(colors[random].g - (colorRatio * 175));
+    const b = Math.round(colors[random].b - (colorRatio * 175));
     const newColor = `rgb(${r}, ${g}, ${b})`;
 
     document.body.style.backgroundColor = newColor;
 
     // Vertical letter spacing change
-    const mouseX = e.clientX;
-    const spacingRatio = mouseX / screenWidth;
-    let newLetterSpacing =  spacingRatio * 5;
-    if (screenWidth < 600) newLetterSpacing -= 3;
-    newLetterSpacing += 'vw';
+    const spacingRatio = clientX / screenWidth;
+    let variable = 2.5;
+    if (screenWidth < 601) variable = 5;
+    let newLetterSpacing = spacingRatio * variable + 'vw';
 
-    const aboutText = document.querySelector('#about .name');
-    aboutText.style.letterSpacing = newLetterSpacing;
-    aboutText.style.textIndent = newLetterSpacing;
+    const heroText = document.querySelector('#hero .name');
+    heroText.style.letterSpacing = newLetterSpacing;
+    heroText.style.textIndent = newLetterSpacing;
+}
+
+document.addEventListener('mousemove', (e) => {
+    updateStyles(e.clientX, e.clientY);
+});
+
+document.addEventListener('touchmove', (e) => {
+    const touch = e.touches[0]; // Get the first touch point
+    updateStyles(touch.clientX, touch.clientY);
 });
 
 // Detect if the device is touch-enabled
@@ -75,15 +174,33 @@ document.addEventListener('touchend', () => {
 function scrollToSection(section) {
     const active = fullpage_api.getActiveSection();
     const current = active.item.id;
-    if (current == 'about' && section == 'portfolio') {
+    if (current == 'hero' && section == 'about') {
+        fullpage_api.moveSectionDown();
+    } else if (current == 'hero' && section == 'portfolio') {
+        fullpage_api.moveSectionDown();
+        fullpage_api.moveSectionDown();
+    } else if (current == 'hero' && section == 'contact') {
+        fullpage_api.moveSectionDown();
+        fullpage_api.moveSectionDown();
+        fullpage_api.moveSectionDown();
+    } else if (current == 'about' && section == 'hero') {
+        fullpage_api.moveSectionUp();
+    } else if (current == 'about' && section == 'portfolio') {
         fullpage_api.moveSectionDown();
     } else if (current == 'about' && section == 'contact') {
         fullpage_api.moveSectionDown();
         fullpage_api.moveSectionDown();
+    } else if (current == 'portfolio' && section == 'hero') {
+        fullpage_api.moveSectionUp();
+        fullpage_api.moveSectionUp();
     } else if (current == 'portfolio' && section == 'about') {
         fullpage_api.moveSectionUp();
     } else if (current == 'portfolio' && section == 'contact') {
         fullpage_api.moveSectionDown();
+    } else if (current == 'contact' && section == 'hero') {
+        fullpage_api.moveSectionUp();
+        fullpage_api.moveSectionUp();
+        fullpage_api.moveSectionUp();
     } else if (current == 'contact' && section == 'about') {
         fullpage_api.moveSectionUp();
         fullpage_api.moveSectionUp();
@@ -102,10 +219,14 @@ function updateMenuColor(destination) {
     const portfolioLink = document.getElementById('portfolioLink');
     const contactLink = document.getElementById('contactLink');
 
-    if (div == "about") {
-        aboutLink.style.color = '#8a4536';
+    if (div == "hero") {
+        aboutLink.style.color = 'white';
         portfolioLink.style.color = 'white';
         contactLink.style.color = 'white';
+    } else if (div == "about") {
+        aboutLink.style.color = '#8a4536';
+        portfolioLink.style.color = 'black';
+        contactLink.style.color = 'black';
     } else if (div == "portfolio") {
         aboutLink.style.color = 'black';
         portfolioLink.style.color = '#8a4536';
@@ -120,255 +241,11 @@ function updateMenuColor(destination) {
 
 // onload animation
 setTimeout(() => {
-    const nameElement = document.querySelector("#about .name");
+    const nameElement = document.querySelector("#hero .name");
     nameElement.style.top = '50%';
-    const txtElement = document.querySelector("#about p");
+    const txtElement = document.querySelector("#hero p");
     txtElement.style.top = '50%';
 }, 300);
-
-// carousel images change
-function updateCarouselImages() {
-    document.querySelectorAll('#carousel-inner div').forEach(div => {
-        let interval;
-        let currentImageIndex = 0;
-
-        const changeImage = () => {
-            let imgElement = div.querySelector('img');
-            let imagePaths = div.getAttribute('data-images').split(',');
-
-            if (imagePaths.length > 1) {
-                currentImageIndex = (currentImageIndex + 1) % imagePaths.length;
-                imgElement.src = imagePaths[currentImageIndex];
-            }
-        };
-
-        if (window.innerWidth > 600) {
-            div.addEventListener('mouseenter', () => {
-                clearInterval(interval);
-                changeImage();
-                interval = setInterval(changeImage, 800);
-            });
-            div.addEventListener('mouseleave', () => {
-                clearInterval(interval);
-                currentImageIndex = 0;
-                let imgElement = div.querySelector('img');
-                let imagePaths = div.getAttribute('data-images').split(',');
-                imgElement.src = imagePaths[0];
-            });
-        }
-
-        // Additional functionality for smaller screens
-        if (window.innerWidth <= 600) {
-            clearInterval(interval);
-            interval = setInterval(changeImage, 1500); // Change images every 1.5 seconds
-        }
-    });
-}
-
-// Run the function on load and on resize
-updateCarouselImages();
-window.addEventListener('resize', updateCarouselImages);
-
-
-// contact blur
-document.querySelector('#mail').addEventListener('mouseenter', function() {
-    document.querySelector('#mailBlur').classList.add('blur');
-});
-
-document.querySelector('#mail').addEventListener('mouseleave', function() {
-    document.querySelector('#mailBlur').classList.remove('blur');
-});
-
-
-
-
-// Handle gallery icon click event
-document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('gallery-modal');
-    const galleryImages = document.getElementById('gallery-images');
-    const galleryProjectName = document.getElementById('gallery-project-name');
-    const closeBtn = document.querySelector('.modal .close');
-    const leftArrow = document.querySelector('.arrow.left');
-    const rightArrow = document.querySelector('.arrow.right');
-    const indicator = document.getElementById('gallery-indicator');
-
-    let imageFiles = [];
-    let projectName = "";
-    let currentIndex = 0;
-    let isModalOpen = false; // Track if the modal is open
-
-    document.querySelectorAll('.galleryClick').forEach(function(icon) {
-        icon.addEventListener('click', function(event) {
-            event.stopPropagation();
-            projectName = icon.dataset.projectPath;
-            galleryProjectName.textContent = projectName; // Set the project name
-            imageFiles = JSON.parse(icon.getAttribute('data-image-files'));
-            currentIndex = 0;
-            populateGallery();
-            showModal();
-        });
-    });
-
-    function populateGallery() {
-        galleryImages.innerHTML = ''; // Clear existing images
-        imageFiles.forEach(file => {
-            const img = document.createElement('img');
-            img.src = file;
-            galleryImages.appendChild(img);
-        });
-        // Clone the first and last images to enable seamless scrolling
-        const firstImg = galleryImages.children[0].cloneNode(true);
-        const lastImg = galleryImages.children[galleryImages.children.length - 1].cloneNode(true);
-        galleryImages.appendChild(firstImg);
-        galleryImages.insertBefore(lastImg, galleryImages.children[0]);
-        updateGalleryPosition();
-        updateArrowVisibility();
-        updateIndicator(); // Update indicator on gallery initialization
-    }
-
-    function showModal() {
-        isModalOpen = true; // Set modal as open
-        modal.style.display = 'flex';
-        setTimeout(() => {
-            modal.style.opacity = '1'; // Fade-in effect
-        }, 10); // Small delay for the opacity transition to work
-        disableCarousel(); // Disable carousel when modal is open
-    }
-
-    function hideModal() {
-        isModalOpen = false; // Set modal as closed
-        modal.style.opacity = '0'; // Fade-out effect
-        setTimeout(() => {
-            modal.style.display = 'none';
-        }, 500); // Match the CSS transition duration
-        enableCarousel(); // Re-enable carousel when modal is closed
-    }
-
-    function updateGalleryPosition() {
-        galleryImages.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
-        updateArrowVisibility();
-        updateIndicator(); // Update indicator when position changes
-    }
-
-    function showNextImage() {
-        if (currentIndex < imageFiles.length - 1) {
-            currentIndex++;
-            updateGalleryPosition();
-        }
-    }
-
-    function showPrevImage() {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateGalleryPosition();
-        }
-    }
-
-    function updateArrowVisibility() {
-        // Hide left arrow if on the first image
-        if (currentIndex === 0) {
-            leftArrow.style.display = 'none';
-        } else {
-            leftArrow.style.display = 'block';
-        }
-        
-        // Hide right arrow if on the last image
-        if (currentIndex === imageFiles.length - 1) {
-            rightArrow.style.display = 'none';
-        } else {
-            rightArrow.style.display = 'block';
-        }
-    }
-
-    function updateIndicator() {
-        indicator.textContent = `${currentIndex + 1}/${imageFiles.length}`;
-    }
-
-    // Disable carousel functionality
-    function disableCarousel() {
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('touchstart', handleTouchStart);
-        document.removeEventListener('touchmove', handleTouchMove);
-    }
-
-    // Enable carousel functionality
-    function enableCarousel() {
-        document.addEventListener('mousemove', handleMouseMove);
-        document.addEventListener('touchstart', handleTouchStart);
-        document.addEventListener('touchmove', handleTouchMove);
-    }
-
-    // Mouse and touch event handlers
-    function handleMouseMove(e) {
-        if (!isTouchDevice) {
-            document.addEventListener('mousemove', (e) => {
-                const mouseX = e.clientX;
-                scrollX = (mouseX / window.innerWidth) * carouselWidth;
-                carouselInner.style.transform = `translateX(${-scrollX}px)`;
-            });
-        }
-    }
-
-    function handleTouchStart(e) {
-        if (isTouchDevice) {
-            isTouching = true;
-            startX = e.touches[0].clientX;
-            lastTouchX = startX;
-            velocity = 0;
-            carouselInner.style.transition = 'none'; // Disable transition during touch move
-            clearInterval(momentumInterval); // Stop any ongoing momentum
-        }
-    }
-
-    function handleTouchMove(e) {
-        if (isTouching) {
-            const touchX = e.touches[0].clientX;
-            const deltaX = startX - touchX;
-            startX = touchX;
-            scrollX += deltaX;
-    
-            // Calculate velocity
-            velocity = touchX - lastTouchX;
-            lastTouchX = touchX;
-    
-            // Prevent scrolling beyond limits
-            if (scrollX < 0) scrollX = 0;
-            if (scrollX > carouselWidth) scrollX = carouselWidth;
-    
-            // Apply transformation
-            carouselInner.style.transform = `translateX(${-scrollX}px)`;
-        }
-    }
-
-
-
-    // Initial enable of carousel (on page load)
-    enableCarousel();
-
-    // Close button functionality
-    closeBtn.addEventListener('click', hideModal);
-
-    // Arrow click functionality
-    leftArrow.addEventListener('click', showPrevImage);
-    rightArrow.addEventListener('click', showNextImage);
-
-    // Swipe functionality for touch devices
-    let touchStartX = 0;
-
-    galleryImages.addEventListener('touchstart', function(e) {
-        touchStartX = e.touches[0].clientX;
-    });
-
-    galleryImages.addEventListener('touchend', function(e) {
-        let touchEndX = e.changedTouches[0].clientX;
-        if (touchStartX - touchEndX > 50) {
-            showNextImage();
-        } else if (touchEndX - touchStartX > 50) {
-            showPrevImage();
-        }
-    });
-});
-
 
 
 //game
@@ -549,4 +426,207 @@ function stopDragging() {
 }
 
 
+
+
+
+// contact blur
+document.querySelector('#mail').addEventListener('mouseenter', function() {
+    document.querySelector('#mailBlur').classList.add('blur');
+});
+
+document.querySelector('#mail').addEventListener('mouseleave', function() {
+    document.querySelector('#mailBlur').classList.remove('blur');
+});
+
+
+
+
+// Handle gallery icon click event
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('gallery-modal');
+    const galleryImages = document.getElementById('gallery-images');
+    const galleryProjectName = document.getElementById('gallery-project-name');
+    const closeBtn = document.querySelector('.modal .close');
+    const leftArrow = document.querySelector('.arrow.left');
+    const rightArrow = document.querySelector('.arrow.right');
+    const indicator = document.getElementById('gallery-indicator');
+
+    let imageFiles = [];
+    let projectName = "";
+    let currentIndex = 0;
+    let isModalOpen = false; // Track if the modal is open
+
+    document.querySelectorAll('.galleryClick').forEach(function(icon) {
+        icon.addEventListener('click', function(event) {
+            event.stopPropagation();
+            projectName = icon.dataset.projectPath;
+            galleryProjectName.textContent = projectName; // Set the project name
+            imageFiles = JSON.parse(icon.getAttribute('data-image-files'));
+            currentIndex = 0;
+            populateGallery();
+            showModal();
+        });
+    });
+
+    function populateGallery() {
+        galleryImages.innerHTML = ''; // Clear existing images
+        imageFiles.forEach(file => {
+            const img = document.createElement('img');
+            img.src = file;
+            img.setAttribute("loading","lazy");
+            img.classList.add("loading");
+            galleryImages.appendChild(img);
+        });
+        // Clone the first and last images to enable seamless scrolling
+        const firstImg = galleryImages.children[0].cloneNode(true);
+        const lastImg = galleryImages.children[galleryImages.children.length - 1].cloneNode(true);
+        galleryImages.appendChild(firstImg);
+        galleryImages.insertBefore(lastImg, galleryImages.children[0]);
+        updateGalleryPosition();
+        updateArrowVisibility();
+        updateIndicator(); // Update indicator on gallery initialization
+    }
+
+    function showModal() {
+        isModalOpen = true; // Set modal as open
+        modal.style.display = 'flex';
+        setTimeout(() => {
+            modal.style.opacity = '1'; // Fade-in effect
+        }, 10); // Small delay for the opacity transition to work
+        disableCarousel(); // Disable carousel when modal is open
+    }
+
+    function hideModal() {
+        isModalOpen = false; // Set modal as closed
+        modal.style.opacity = '0'; // Fade-out effect
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 500); // Match the CSS transition duration
+        enableCarousel(); // Re-enable carousel when modal is closed
+    }
+
+    function updateGalleryPosition() {
+        galleryImages.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
+        updateArrowVisibility();
+        updateIndicator(); // Update indicator when position changes
+    }
+
+    function showNextImage() {
+        if (currentIndex < imageFiles.length - 1) {
+            currentIndex++;
+            updateGalleryPosition();
+        }
+    }
+
+    function showPrevImage() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateGalleryPosition();
+        }
+    }
+
+    function updateArrowVisibility() {
+        // Hide left arrow if on the first image
+        if (currentIndex === 0) {
+            leftArrow.style.display = 'none';
+        } else {
+            leftArrow.style.display = 'block';
+        }
+        
+        // Hide right arrow if on the last image
+        if (currentIndex === imageFiles.length - 1) {
+            rightArrow.style.display = 'none';
+        } else {
+            rightArrow.style.display = 'block';
+        }
+    }
+
+    function updateIndicator() {
+        indicator.textContent = `${currentIndex + 1}/${imageFiles.length}`;
+    }
+
+    // Disable carousel functionality
+    function disableCarousel() {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('touchstart', handleTouchStart);
+        document.removeEventListener('touchmove', handleTouchMove);
+    }
+
+    // Enable carousel functionality
+    function enableCarousel() {
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('touchstart', handleTouchStart);
+        document.addEventListener('touchmove', handleTouchMove);
+    }
+
+    // Mouse and touch event handlers
+    function handleMouseMove(e) {
+        if (!isTouchDevice) {
+            document.addEventListener('mousemove', (e) => {
+                const mouseX = e.clientX;
+                scrollX = (mouseX / window.innerWidth) * carouselWidth;
+                carouselInner.style.transform = `translateX(${-scrollX}px)`;
+            });
+        }
+    }
+
+    function handleTouchStart(e) {
+        if (isTouchDevice) {
+            isTouching = true;
+            startX = e.touches[0].clientX;
+            lastTouchX = startX;
+            velocity = 0;
+            carouselInner.style.transition = 'none'; // Disable transition during touch move
+            clearInterval(momentumInterval); // Stop any ongoing momentum
+        }
+    }
+
+    function handleTouchMove(e) {
+        if (isTouching) {
+            const touchX = e.touches[0].clientX;
+            const deltaX = startX - touchX;
+            startX = touchX;
+            scrollX += deltaX;
+    
+            // Calculate velocity
+            velocity = touchX - lastTouchX;
+            lastTouchX = touchX;
+    
+            // Prevent scrolling beyond limits
+            if (scrollX < 0) scrollX = 0;
+            if (scrollX > carouselWidth) scrollX = carouselWidth;
+    
+            // Apply transformation
+            carouselInner.style.transform = `translateX(${-scrollX}px)`;
+        }
+    }
+
+
+
+    // Initial enable of carousel (on page load)
+    enableCarousel();
+
+    // Close button functionality
+    closeBtn.addEventListener('click', hideModal);
+
+    // Arrow click functionality
+    leftArrow.addEventListener('click', showPrevImage);
+    rightArrow.addEventListener('click', showNextImage);
+
+    // Swipe functionality for touch devices
+    let touchStartX = 0;
+
+    galleryImages.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+    });
+
+    galleryImages.addEventListener('touchend', function(e) {
+        let touchEndX = e.changedTouches[0].clientX;
+        if (touchStartX - touchEndX > 50) {
+            showNextImage();
+        } else if (touchEndX - touchStartX > 50) {
+            showPrevImage();
+        }
+    });
+});
 
