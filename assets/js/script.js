@@ -117,9 +117,7 @@ function updateStyles(clientX, clientY) {
 
     // Vertical letter spacing change
     const spacingRatio = clientX / screenWidth;
-    let variable = 2.5;
-    if (screenWidth < 601) variable = 5;
-    let newLetterSpacing = spacingRatio * variable + 'vw';
+    let newLetterSpacing = spacingRatio * 4 + 'vw';
 
     const heroText = document.querySelector('#hero .name');
     heroText.style.letterSpacing = newLetterSpacing;
@@ -168,6 +166,25 @@ document.addEventListener('touchend', () => {
     }
 });
 
+//about image background
+function updateBackgroundGradient() {
+    const aboutSection = document.getElementById("about");
+    const meImage = document.getElementById("meImage");
+
+    // Get the height of the image and section
+    const imageHeight = meImage.offsetHeight;
+    const sectionHeight = aboutSection.offsetHeight;
+
+    // Calculate the position of the image's center as a percentage of the section height
+    const centerPercentage = ((imageHeight / 2 + meImage.offsetTop) / sectionHeight) * 100;
+
+    // Apply the gradient using the calculated percentage
+    aboutSection.style.background = `linear-gradient(180deg, rgba(26,27,26,0) ${centerPercentage}%, rgba(255,255,255,1) ${centerPercentage}%)`;
+}
+
+// Call the function when the page loads and when the window is resized
+window.addEventListener('load', updateBackgroundGradient);
+window.addEventListener('resize', updateBackgroundGradient);
 
 
 // scroll to menu

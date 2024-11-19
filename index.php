@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PALO SISKA</title>
+    <title>SISKA</title>
 
     <meta name="description" content="Content goes here...">
     <meta name="keywords" content="HTML, CSS, JavaScript">
@@ -20,7 +20,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=Unkempt:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=Montagu+Slab:opsz,wght@16..144,100..700&family=Unkempt:wght@400;700&display=swap" rel="stylesheet">
 
     <link href="assets/css/fullpage.css" rel="stylesheet">
     <script src="assets/js/fullpage.js"></script>
@@ -39,8 +39,9 @@
         </div>
 
         <div class="section" id="about">
+            <img id="meImage" src="assets/images/me.png">
             <p class="text">
-                Hi, I am Palo,<br>
+                <span>Hi, I am Palo,</span>
                 After graduation at TU in Vienna I am designing and of course sometimes also building my proposals for over 8 years for now.<br>
                 With various domestic and international experiences I have already achieved skills in architecture, design, craftsmanship and building management as well.<br>
                 My design philosophy is to achieve, through my designs, strong bonding and sensible adhesive between humans and their surroundings.<br>
