@@ -35,11 +35,11 @@
     <div id="fullpage">
         <div class="section" id="hero">
             <p class="text">I design. I build. I design & build</p>
-            <p class="name">SISKA</p>
+            <p class="name">S<span>P</span>I<span>A</span>S<span>L</span>K<span>O</span>A</p>
         </div>
 
         <div class="section" id="about">
-            <img id="meImage" src="assets/images/me.png">
+            <img id="meImage" src="assets/images/siska.gif">
             <p class="text">
                 <span>Hi, I am Palo,</span>
                 After graduation at TU in Vienna I am designing and of course sometimes also building my proposals for over 8 years for now.<br>

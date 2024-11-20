@@ -45,9 +45,15 @@ body {
     font-family: "Montagu Slab", serif;
 }
 
+#hero .name span {
+    position: relative;
+    color: rgba(255,255,255,0.5);
+    z-index: -1;
+}
+
 @media only screen and (max-width: 600px) {
     #hero .name {
-        font-size: 90px;
+        font-size: 16vw;
         line-height: 0.9;
     }
     #hero .text {

@@ -117,7 +117,7 @@ function updateStyles(clientX, clientY) {
 
     // Vertical letter spacing change
     const spacingRatio = clientX / screenWidth;
-    let newLetterSpacing = spacingRatio * 4 + 'vw';
+    let newLetterSpacing = (spacingRatio * 2) - 3.5 + 'vw';
 
     const heroText = document.querySelector('#hero .name');
     heroText.style.letterSpacing = newLetterSpacing;
