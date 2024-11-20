@@ -4,7 +4,7 @@ async function checkInternetSpeed() {
         const startTime = Date.now();
         const imageUrl = 'https://images3.alphacoders.com/115/1151867.png'; // Use a small image to test
 
-        image.onload = function() {
+        image.onload = function () {
             const endTime = Date.now();
             const duration = (endTime - startTime) / 1000; // Time in seconds
             const fileSize = 1024 * 50; // File size in bytes (50KB example)
@@ -14,7 +14,7 @@ async function checkInternetSpeed() {
             resolve(speedKbps);
         };
 
-        image.onerror = function() {
+        image.onerror = function () {
             console.error('Error loading test image for speed check.');
             reject('Failed to load image');
         };
@@ -29,57 +29,64 @@ let speed = 0;
     try {
         speed = await checkInternetSpeed();
         console.log(`Internet speed: ${speed} Kbps`);
-// carousel images change
-function updateCarouselImages() {
-    document.querySelectorAll('#carousel-inner div').forEach(div => {
-        let interval;
-        let currentImageIndex = 0;
+        // carousel images change
+        function updateCarouselImages() {
+            document.querySelectorAll('#carousel-inner div').forEach(div => {
+                let interval;
+                let currentImageIndex = 0;
 
-        const changeImage = () => {
-            let imgElement = div.querySelector('img');
-            if (imgElement != null) {
-                let imagePaths = div.getAttribute('data-images').split(',');
+                const changeImage = () => {
+                    let imgElement = div.querySelector('img');
+                    if (imgElement != null) {
+                        let imagePaths = div.getAttribute('data-images').split(',');
 
-                if (imagePaths.length > 1) {
-                    currentImageIndex = (currentImageIndex + 1) % imagePaths.length;
-                    imgElement.src = imagePaths[currentImageIndex];
+                        if (imagePaths.length > 1) {
+                            currentImageIndex = (currentImageIndex + 1) % imagePaths.length;
+                            imgElement.src = imagePaths[currentImageIndex];
+                        }
+                    }
+                };
+
+                if (window.innerWidth > 600 && speed > 1000) {
+                    div.addEventListener('mouseenter', () => {
+                        clearInterval(interval);
+                        changeImage();
+                        interval = setInterval(changeImage, 800);
+                    });
+                    div.addEventListener('mouseleave', () => {
+                        clearInterval(interval);
+                        currentImageIndex = 0;
+                        let imgElement = div.querySelector('img');
+                        if (imgElement != null) {
+                            let imagePaths = div.getAttribute('data-images').split(',');
+                            imgElement.src = imagePaths[0];
+                        }
+                    });
                 }
-            }
-        };
 
-        if (window.innerWidth > 600 && speed > 1000) {
-            div.addEventListener('mouseenter', () => {
-                clearInterval(interval);
-                changeImage();
-                interval = setInterval(changeImage, 800);
-            });
-            div.addEventListener('mouseleave', () => {
-                clearInterval(interval);
-                currentImageIndex = 0;
-                let imgElement = div.querySelector('img');
-                if (imgElement != null) {
-                    let imagePaths = div.getAttribute('data-images').split(',');
-                    imgElement.src = imagePaths[0];
+                // Additional functionality for smaller screens
+                if (window.innerWidth <= 600 && speed > 1000) {
+                    clearInterval(interval);
+                    interval = setInterval(changeImage, 1500); // Change images every 1.5 seconds
                 }
             });
         }
 
-        // Additional functionality for smaller screens
-        if (window.innerWidth <= 600 && speed > 1000) {
-            clearInterval(interval);
-            interval = setInterval(changeImage, 1500); // Change images every 1.5 seconds
-        }
-    });
-}
-
-// Run the function on load and on resize
-updateCarouselImages();
-window.addEventListener('resize', updateCarouselImages);
+        // Run the function on load and on resize
+        updateCarouselImages();
+        window.addEventListener('resize', updateCarouselImages);
     } catch (error) {
         console.error(error);
     }
 })();
 
+if (speed < 1000) {
+    const loadingElement = document.getElementById('loading');
+    if (loadingElement) {
+        loadingElement.style.opacity = "0";
+        loadingElement.style.visibility = "hidden";
+    }
+}
 
 // fullpage scroll
 new fullpage('#fullpage', {
@@ -87,18 +94,18 @@ new fullpage('#fullpage', {
     autoScrolling: true,
     scrollHorizontally: true,
     touchSensitivity: 12,
-    afterLoad: function(origin, destination, direction){
+    afterLoad: function (origin, destination, direction) {
         updateMenuColor(destination);
     },
 });
 
 
 const colors = [
-    {r:255, g:175, b:175},
-    {r:255, g:215, b:175},
-    {r:206, g:255, b:175},
-    {r:175, g:236, b:255},
-    {r:192, g:175, b:255},
+    { r: 255, g: 175, b: 175 },
+    { r: 255, g: 215, b: 175 },
+    { r: 206, g: 255, b: 175 },
+    { r: 175, g: 236, b: 255 },
+    { r: 192, g: 175, b: 255 },
 ]
 const random = Math.floor(Math.random() * 4);
 document.body.style.backgroundColor = `rgb(${colors[random].r}, ${colors[random].g}, ${colors[random].b})`;
@@ -378,7 +385,7 @@ function rotateImage(event) {
     if (correctNumber[guessedDigits.length] == guessedNumber) {
         guessedDigits += guessedNumber;
         let updatedNumber = `+421${guessedDigits}${'_'.repeat(9 - guessedDigits.length)}`;
-        
+
         // Remove span from the last guessed digit and add it to the next underscore
         updatedNumber = updatedNumber.replace('_', '<span>_</span>');
         phoneElement.innerHTML = updatedNumber;
@@ -414,7 +421,7 @@ function throwKnobAway() {
         } while (randomNum >= excludeMin && randomNum <= excludeMax);
         return randomNum;
     }
-    
+
     // Generate random values for translateX and translateY
     const randomTranslateX = getRandomNumber(-200, 200, -99, 99);
     const randomTranslateY = getRandomNumber(-200, 200, -99, 99);
@@ -447,11 +454,11 @@ function stopDragging() {
 
 
 // contact blur
-document.querySelector('#mail').addEventListener('mouseenter', function() {
+document.querySelector('#mail').addEventListener('mouseenter', function () {
     document.querySelector('#mailBlur').classList.add('blur');
 });
 
-document.querySelector('#mail').addEventListener('mouseleave', function() {
+document.querySelector('#mail').addEventListener('mouseleave', function () {
     document.querySelector('#mailBlur').classList.remove('blur');
 });
 
@@ -459,7 +466,7 @@ document.querySelector('#mail').addEventListener('mouseleave', function() {
 
 
 // Handle gallery icon click event
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('gallery-modal');
     const galleryImages = document.getElementById('gallery-images');
     const galleryProjectName = document.getElementById('gallery-project-name');
@@ -473,8 +480,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentIndex = 0;
     let isModalOpen = false; // Track if the modal is open
 
-    document.querySelectorAll('.galleryClick').forEach(function(icon) {
-        icon.addEventListener('click', function(event) {
+    document.querySelectorAll('.galleryClick').forEach(function (icon) {
+        icon.addEventListener('click', function (event) {
             event.stopPropagation();
             projectName = icon.dataset.projectPath;
             galleryProjectName.textContent = projectName; // Set the project name
@@ -490,7 +497,7 @@ document.addEventListener('DOMContentLoaded', function() {
         imageFiles.forEach(file => {
             const img = document.createElement('img');
             img.src = file;
-            img.setAttribute("loading","lazy");
+            img.setAttribute("loading", "lazy");
             img.classList.add("loading");
             galleryImages.appendChild(img);
         });
@@ -549,7 +556,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             leftArrow.style.display = 'block';
         }
-        
+
         // Hide right arrow if on the last image
         if (currentIndex === imageFiles.length - 1) {
             rightArrow.style.display = 'none';
@@ -604,15 +611,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const deltaX = startX - touchX;
             startX = touchX;
             scrollX += deltaX;
-    
+
             // Calculate velocity
             velocity = touchX - lastTouchX;
             lastTouchX = touchX;
-    
+
             // Prevent scrolling beyond limits
             if (scrollX < 0) scrollX = 0;
             if (scrollX > carouselWidth) scrollX = carouselWidth;
-    
+
             // Apply transformation
             carouselInner.style.transform = `translateX(${-scrollX}px)`;
         }
@@ -633,11 +640,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Swipe functionality for touch devices
     let touchStartX = 0;
 
-    galleryImages.addEventListener('touchstart', function(e) {
+    galleryImages.addEventListener('touchstart', function (e) {
         touchStartX = e.touches[0].clientX;
     });
 
-    galleryImages.addEventListener('touchend', function(e) {
+    galleryImages.addEventListener('touchend', function (e) {
         let touchEndX = e.changedTouches[0].clientX;
         if (touchStartX - touchEndX > 50) {
             showNextImage();

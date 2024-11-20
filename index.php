@@ -32,6 +32,8 @@
     <img src="assets/images/pointer.svg" style="display: none;">
     <img src="assets/images/knob.svg" style="display: none;">
     
+    <div id="loading"></div>
+
     <div id="fullpage">
         <div class="section" id="hero">
             <p class="text">I design. I build. I design & build</p>
