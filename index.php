@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SISKA</title>
+    <title>palosiska</title>
 
     <meta name="description" content="Content goes here...">
     <meta name="keywords" content="HTML, CSS, JavaScript">
